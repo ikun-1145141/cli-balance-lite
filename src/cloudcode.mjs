@@ -60,7 +60,11 @@ export default {
 
       console.log("Forwarding request to CloudCode API...");
       
-      const response = await fetch(targetUrl, fetchOptions);
+      // 使用 redirect: 'manual' 避免自动跟随重定向，并确保正确处理响应
+      const response = await fetch(targetUrl, {
+        ...fetchOptions,
+        redirect: 'manual'
+      });
       
       console.log(`CloudCode Response Status: ${response.status}`);
 

@@ -224,6 +224,11 @@ export async function handleRequest(request) {
     return cloudcode.fetch(request);
   }
 
+  // 处理 Google OAuth2 Token 请求（CloudCode CLI 需要）
+  if (pathname === '/token' || pathname === '/oauth2/token') {
+    return cloudcode.fetchOAuthToken(request);
+  }
+
   // 处理 OpenAI 格式请求 (保留向后兼容)
   if (pathname.endsWith("/chat/completions") || pathname.endsWith("/completions") || pathname.endsWith("/embeddings") || pathname.endsWith("/models")) {
     return openai.fetch(request);
