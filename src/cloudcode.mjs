@@ -37,8 +37,9 @@ export default {
       headers.set("Authorization", `Bearer ${accessToken}`);
       headers.set("User-Agent", "antigravity/1.19.6 darwin/arm64");
       headers.set("Accept", "application/json");
-      headers.set("Accept-Encoding", "gzip, deflate, br");
       headers.set("Accept-Language", "en-US,en;q=0.9");
+      
+      // 注意：不要手动设置 Accept-Encoding，让 fetch 自动处理压缩
       
       // 保留原始请求中的 Content-Type
       const contentType = request.headers.get("Content-Type");
