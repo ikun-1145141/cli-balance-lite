@@ -89,6 +89,32 @@ export default {
     } catch (err) {
       return errHandler(err);
     }
+  },
+
+  async fetchOAuthToken(request) {
+    const GOOGLE_OAUTH_URL = "https://oauth2.googleapis.com/token";
+    try {
+      const body = await request.text();
+      const response = await fetch(GOOGLE_OAUTH_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "User-Agent": "antigravity/1.19.6 darwin/arm64"
+        },
+        body: body
+      });
+
+      const respHeaders = new Headers(response.headers);
+      respHeaders.set("Access-Control-Allow-Origin", "*");
+
+      return new Response(response.body, {
+        status: response.status,
+        headers: respHeaders
+      });
+    } catch (err) {
+      console.error("OAuth Proxy Error:", err);
+      return new Response(err.message, { status: 500 });
+    }
   }
 };
 
